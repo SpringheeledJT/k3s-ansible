@@ -1,6 +1,7 @@
 ---
 
-- hosts: k3s_cluster
+- name: Handle prerequisite jobs
+  hosts: k3s_cluster
   gather_facts: yes
   become: yes
   roles:
@@ -8,12 +9,14 @@
     - role: download
     - role: raspberrypi
 
-- hosts: master
+- name: Deploy k3s master node
+  hosts: master
   become: yes
   roles:
     - role: k3s/master
 
-- hosts: node
+- name: Deploy k3s worker node
+  hosts: node
   become: yes
   roles:
     - role: k3s/node
